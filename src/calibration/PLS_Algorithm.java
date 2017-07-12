@@ -5,7 +5,8 @@ import com.mathworks.toolbox.javabuilder.MWComplexity;
 import com.mathworks.toolbox.javabuilder.MWException;
 import com.mathworks.toolbox.javabuilder.MWNumericArray;
 
-import PLS_Java.PLS;
+import PLS_Java.Computing;
+//import PLS_Java.PLS;
 /**
  * PLS(Partial Least Squares) 偏最小二乘法
  * function [YY]=PLS_Java(X,Y,X1,PC) YY是处理后返回的结果；X是模型的吸光度；Y是模型的化学值；X1是经过预处理的吸光度;PC是主成分数
@@ -26,7 +27,7 @@ public class PLS_Algorithm {
 	 */
 //public PLS_Algorithm(double[][] model_absorbance,double[][] model_chemicalValue, double[][] afterPreprocess,int PC) throws MWException, FileNotFoundException{	
 public PLS_Algorithm(double[][] afterPreprocess) throws MWException, FileNotFoundException{
-	PLS pls=new PLS();
+	Computing pls=new Computing();
             //设置矩阵
 			//int[] n1={model_absorbance.length,model_absorbance[0].length};
 			//int[] n2={model_chemicalValue.length,model_chemicalValue[0].length};

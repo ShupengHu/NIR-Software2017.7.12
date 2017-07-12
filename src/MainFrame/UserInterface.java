@@ -556,7 +556,7 @@ public class UserInterface extends JFrame implements ActionListener{
 					if(TimeText.getText().equalsIgnoreCase("")){
 						JOptionPane.showMessageDialog(this, "没有输入积分时间","错误",JOptionPane.ERROR_MESSAGE);
 						return;
-					}else if(Integer.parseInt(TimeText.getText())<100||Integer.parseInt(TimeText.getText())%1!=0){
+					}else if(Integer.parseInt(TimeText.getText())<1||Integer.parseInt(TimeText.getText())%1!=0){
 						JOptionPane.showMessageDialog(this, "积分时间必须为不能小于100的整数","错误",JOptionPane.ERROR_MESSAGE);
 						return;
 					}
@@ -621,9 +621,9 @@ public class UserInterface extends JFrame implements ActionListener{
 			double[] originalAbsorbance=null;
 			originalAbsorbance=RA.getAbsorbance();	
 			//光谱吸光度数据剔除处理，取11-240一共230个数据
-			this.absorbance=new double[230];
+			this.absorbance=new double[512];
 			int absorbance_index=0;
-			for(int i=10;i<240;i++){
+			for(int i=0;i<512;i++){
 				this.absorbance[absorbance_index]=originalAbsorbance[i];
 				absorbance_index++;
 			}
