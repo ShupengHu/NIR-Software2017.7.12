@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_79"/>
+	<classpathentry kind="lib" path="lib/HighResTiming.jar"/>
+	<classpathentry kind="lib" path="lib/OmniDriverGUISupport.jar"/>
+	<classpathentry kind="lib" path="lib/OOIUtils.jar"/>
+	<classpathentry kind="lib" path="lib/SPAM.jar"/>
+	<classpathentry kind="lib" path="lib/TeeChart.Swing.jar"/>
+	<classpathentry kind="lib" path="lib/TeeChart.SWT.jar"/>
+	<classpathentry kind="lib" path="lib/UniRS232.jar"/>
+	<classpathentry kind="lib" path="lib/UniUSB.jar"/>
+	<classpathentry kind="lib" path="lib/xpp3_min-1.1.3.4.M.jar"/>
+	<classpathentry kind="lib" path="lib/xstream-1.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.6-bin.jar"/>
+	<classpathentry kind="lib" path="lib/RXTXcomm.jar"/>
+	<classpathentry kind="lib" path="lib/OmniDriver.jar"/>
+	<classpathentry kind="lib" path="lib/javabuilder.jar"/>
+	<classpathentry kind="lib" path="lib/SNV.jar"/>
+	<classpathentry kind="lib" path="lib/PLS_Java.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/poi-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="lib/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/savgol.jar"/>
+	<classpathentry kind="lib" path="lib/MSC_Java.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
