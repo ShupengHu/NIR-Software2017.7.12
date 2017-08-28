@@ -1046,16 +1046,29 @@ public class UserInterface extends JFrame implements ActionListener{
 				s.close();
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
-			}
+			}   
+		    //确认波长个数
+		    int numberofwavelengths=0;
+		    try {
+		    	File file_test=new File("Wavelengths.txt");
+				Scanner s_test=new Scanner(file_test);
+				while(s_test.hasNextDouble()){
+					s_test.nextDouble();
+					numberofwavelengths++;
+				}
+				s_test.close();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}   
 		    //读取波长数据
-		    double[] X_axis=new double[256];
+		    double[] X_axis=new double[numberofwavelengths];
 		    int index1=0;
 		    try {
 		    	File file2=new File("Wavelengths.txt");
 				Scanner s=new Scanner(file2);
 				while(s.hasNextDouble()){
-					X_axis[index1]=s.nextDouble();
-					index1++;					
+					X_axis[index1]=s.nextDouble();	
+					index1++;
 				}
 				s.close();
 			} catch (FileNotFoundException e1) {
