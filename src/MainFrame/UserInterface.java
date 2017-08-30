@@ -168,6 +168,9 @@ public class UserInterface extends JFrame implements ActionListener{
 		byte[] forward={0x01,0x0f,0x00,0x00,0x00,0x08,0x01,0x11,(byte) 0xff,0x65};   //前进指令
 		byte[] backward={0x01,0x0f,0x00,0x00,0x00,0x08,0x01,0x01,(byte) 0xff,0x65};   //后退指令
 		byte[] positionCheck={0x01,0x03,0x00,0x00,0x00,0x02,(byte) 0xff,0x65};        //电机复位自检指令
+		
+		//自动运行按钮背景色
+		Color color=null;
 
 		public UserInterface() throws IOException{
 			 setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -305,18 +308,21 @@ public class UserInterface extends JFrame implements ActionListener{
 			TimeLable.setFont(new Font("宋体", Font.PLAIN, 12));
 			TimeLable.setForeground(Color.black);
 			TimeText.setBounds(new Rectangle(85, 30, 40, 50));
+			TimeText.setText("16");
 			//设置平均次数界面
 			AverageLable.setBounds(new Rectangle(200, 30, 50, 50));
 			AverageLable.setText("平均次数");
 			AverageLable.setFont(new Font("宋体", Font.PLAIN, 12));
 			AverageLable.setForeground(Color.black);
 			AverageText.setBounds(new Rectangle(250, 30, 40, 50));
+			AverageText.setText("160");
 			//设置平滑度界面
 			SmoothLable.setBounds(new Rectangle(300, 30, 40, 50));
 			SmoothLable.setText("平滑度");
 			SmoothLable.setFont(new Font("宋体", Font.PLAIN, 12));
 			SmoothLable.setForeground(Color.black);
 			SmoothText.setBounds(new Rectangle(340, 30, 20, 50));
+			SmoothText.setText("1");
 			//设置自动运行时间间隔界面
 			intervalLable.setBounds(new Rectangle(1040, 10, 70, 40));
 			intervalLable.setText("时间间隔(s)");
@@ -486,7 +492,8 @@ public class UserInterface extends JFrame implements ActionListener{
 					}
 	          	}
 	          });      
-	       //设置"自动运行"按钮
+	       //设置"自动运行"按钮	  
+	         color=autoRunButton.getBackground();
 	         autoRunButton.setBounds(new Rectangle(1110, 50, 100, 50));
 	         autoRunButton.setText("自动运行");
 	         autoRunButton.setFont(new Font("宋体", Font.PLAIN, 12));
@@ -892,6 +899,8 @@ public class UserInterface extends JFrame implements ActionListener{
 		public void autoRunButtonMouseClicked(final java.awt.event.MouseEvent evt){
 		///*----------------------timer方法--------------
 		  this.isAutoRun=true;
+		  autoRunButton.setBackground(Color.yellow);
+		  System.out.println(autoRunButton.getBackground());
           final Timer timer=new Timer();
           TimerTask tt=new TimerTask() {			
 			@Override
@@ -1383,6 +1392,7 @@ public class UserInterface extends JFrame implements ActionListener{
 			}
 			//设置光谱仪状态
 			this.isStoped=true;
+			autoRunButton.setBackground(color);
 			/*
 			//延迟24秒让工控机运行完全，复位后再关闭光谱仪
 			Thread.sleep(24*1000);
