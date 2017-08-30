@@ -100,6 +100,9 @@ public class UserInterface extends JFrame implements ActionListener{
 		//自动运行间隔时间
 		private JLabel intervalLable=new JLabel();
 		private JTextField intervalText=new JTextField();
+		//校正间隔
+		private JLabel loopLable=new JLabel();
+		private JTextField loopText=new JTextField();
 		//算法选择
 		private JLabel preprocessLable=new JLabel();
 		private String[] preAlgorithms={"None","SNV","SG","MSC"};		
@@ -135,6 +138,8 @@ public class UserInterface extends JFrame implements ActionListener{
 		int smoothness=0;                                       //平滑度
 		int numberOfScansToAverage=0;	                        //平均扫描次数
 		int timeInterval=0;                                     //自动运行时间间隔
+		int loop=0;                                             //校正间隔
+		int loopCounter=0;                                      //校正间隔循环计数器
 		//其他参数
 		OmniDriver OD=null;
 		Connection con=null;
@@ -313,11 +318,17 @@ public class UserInterface extends JFrame implements ActionListener{
 			SmoothLable.setForeground(Color.black);
 			SmoothText.setBounds(new Rectangle(340, 30, 20, 50));
 			//设置自动运行时间间隔界面
-			intervalLable.setBounds(new Rectangle(1110, 10, 70, 40));
+			intervalLable.setBounds(new Rectangle(1040, 10, 70, 40));
 			intervalLable.setText("时间间隔(s)");
 			intervalLable.setFont(new Font("宋体", Font.PLAIN, 12));
 			intervalLable.setForeground(Color.black);
-			intervalText.setBounds(new Rectangle(1180, 10, 50, 40));
+			intervalText.setBounds(new Rectangle(1110, 10, 50, 40));
+			//设置校正间隔界面
+			loopLable.setBounds(new Rectangle(1170, 10, 50, 40));
+			loopLable.setText("校正间隔");
+			loopLable.setFont(new Font("宋体", Font.PLAIN, 12));
+			loopLable.setForeground(Color.black);
+			loopText.setBounds(new Rectangle(1220, 10, 50, 40));
 			//设置算法选择界面
 			preprocessLable.setBounds(new Rectangle(370, 30, 60, 20));
 			preprocessLable.setText("预处理算法");
@@ -543,6 +554,8 @@ public class UserInterface extends JFrame implements ActionListener{
 			contentPane.add(calibrationBox);
 			contentPane.add(intervalLable);
 			contentPane.add(intervalText);
+			contentPane.add(loopLable);
+			contentPane.add(loopText);
 		}
 		/**
 		 * 实现“运行”按钮功能:1)向单片机输入指令;2)得到数据并储存；3）画图
@@ -594,6 +607,9 @@ public class UserInterface extends JFrame implements ActionListener{
 			this.OD.OmniOperations(this.usec, this.numberOfScansToAverage, this.smoothness);
 			this.Wavelengths=this.OD.getWaveLengths();
 			/*-----向单片机输入指令，得到不同的光谱---*/
+			/*-----2017.8.30新增功能：增加校正间隔，第一次获取所有数据，其后只获取样品光谱，根据输入的校正间隔次数循环*/
+			//第一次
+			if(loopCounter==1) {
 			//首先发出指令：前进10s,停止1秒；得到背景光谱
 			SerialCommunication.portWrite(forward);
 			Thread.sleep(1*500);
@@ -613,14 +629,19 @@ public class UserInterface extends JFrame implements ActionListener{
 			Thread.sleep(5*1000);
 			SerialCommunication.portWrite(stop);
 			Thread.sleep(1*1000);
-			this.S_LightIntensities=this.OD.getLigthIntensities();				
+			this.S_LightIntensities=this.OD.getLigthIntensities();		
+			}
+			//其他次数
+			else{
+				this.S_LightIntensities=this.OD.getLigthIntensities();	
+			}
 			/*-----计算得到反射率和吸光度-----*/
 			Reflectivity_Absorbance RA=new Reflectivity_Absorbance(this.R_LightIntensities,this.B_LightIntensities,this.S_LightIntensities);
 			this.reflectivity=RA.getReflectivity();			
 			
 			double[] originalAbsorbance=null;
 			originalAbsorbance=RA.getAbsorbance();	
-			//光谱吸光度数据剔除处理，取11-240一共230个数据
+			//光谱吸光度数据剔除处理
 			this.absorbance=new double[512];
 			int absorbance_index=0;
 			for(int i=0;i<512;i++){
@@ -870,7 +891,14 @@ public class UserInterface extends JFrame implements ActionListener{
 			@Override
 			public void run() {												
               try {
-            	  isRunned=true;
+            	//如果计数器大于或等于校正间隔，重置计数器
+            	loop=Integer.parseInt(loopText.getText());
+            	if(loopCounter>=loop) {
+            		loopCounter=0;
+            	}
+            	isRunned=true;
+            	//校正间隔循环计数器+1
+            	loopCounter++;
 				RunButtonMouseClicked(evt);
 				//是否停止计时器
 		          if(isStoped==true){
