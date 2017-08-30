@@ -304,13 +304,13 @@ public class UserInterface extends JFrame implements ActionListener{
 			TimeLable.setText("积分时间：毫秒");
 			TimeLable.setFont(new Font("宋体", Font.PLAIN, 12));
 			TimeLable.setForeground(Color.black);
-			TimeText.setBounds(new Rectangle(85, 30, 80, 50));
+			TimeText.setBounds(new Rectangle(85, 30, 40, 50));
 			//设置平均次数界面
 			AverageLable.setBounds(new Rectangle(200, 30, 50, 50));
 			AverageLable.setText("平均次数");
 			AverageLable.setFont(new Font("宋体", Font.PLAIN, 12));
 			AverageLable.setForeground(Color.black);
-			AverageText.setBounds(new Rectangle(250, 30, 20, 50));
+			AverageText.setBounds(new Rectangle(250, 30, 40, 50));
 			//设置平滑度界面
 			SmoothLable.setBounds(new Rectangle(300, 30, 40, 50));
 			SmoothLable.setText("平滑度");
@@ -609,6 +609,12 @@ public class UserInterface extends JFrame implements ActionListener{
 			/*-----向单片机输入指令，得到不同的光谱---*/
 			/*-----2017.8.30新增功能：增加校正间隔，第一次获取所有数据，其后只获取样品光谱，根据输入的校正间隔次数循环*/
 			//第一次
+
+//胡澍芃 2017/8/30 17:10:19
+//判断是否是自动运行,不是自动运行，loopcounter=1
+			if(isAutoRun==false) {
+			loopCounter=1;
+			}
 			if(loopCounter==1) {
 			//首先发出指令：前进10s,停止1秒；得到背景光谱
 			SerialCommunication.portWrite(forward);
@@ -899,6 +905,7 @@ public class UserInterface extends JFrame implements ActionListener{
             	isRunned=true;
             	//校正间隔循环计数器+1
             	loopCounter++;
+            	System.out.println("loopcounter: "+loopCounter);
 				RunButtonMouseClicked(evt);
 				//是否停止计时器
 		          if(isStoped==true){
@@ -1063,7 +1070,7 @@ public class UserInterface extends JFrame implements ActionListener{
 		    File selectedFile=this.openFiles[n];		   
 		    openFilePath=selectedFile.getPath();
 		    //读取记事本文件中的数据
-		    double[] Y_axis=new double[256];
+		    double[] Y_axis=new double[512];
 		    int index=0;
 		    try {
 				Scanner s=new Scanner(selectedFile);
@@ -1226,7 +1233,7 @@ public class UserInterface extends JFrame implements ActionListener{
 			    System.out.println("光谱已选 "+this.selectedAbsorbance.length);		
 			    //System.out.println(this.selectedAbsorbance[0]+"   "+this.selectedAbsorbance[this.selectedAbsorbance.length-2]);	
 			  //读取波长数据
-			    double[] X_axis=new double[256];
+			    double[] X_axis=new double[512];
 			    int index1=0;
 			    try {
 			    	File file2=new File("Wavelengths.txt");
