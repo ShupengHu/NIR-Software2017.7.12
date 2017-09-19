@@ -928,7 +928,12 @@ public class UserInterface extends JFrame implements ActionListener{
 		};
 		//设置启动计时器基本运行时间40s，延时启动时间0；计时器实际运行时间=计时器基本运行时间40+手动输入的每两次运行的时间间隔
 		this.timeInterval=Integer.parseInt(intervalText.getText())*1000;
-        timer.schedule(tt, 0, 40*1000+this.timeInterval);
+		//第一次
+		if(loopCounter==1) {
+			timer.schedule(tt, 0, 30*1000+this.timeInterval);
+		}else
+		//非第一次
+        timer.schedule(tt, 0, 15*1000+this.timeInterval);
 		//*/
 		
 		/*----------------do while 方法-------------------------
